@@ -1,6 +1,8 @@
 import Models.Agencia;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +11,10 @@ public class Main {
 
         int seleccionAgencias = menuAgencias();
         baseDeDatos = seleccionarBaseDeDatos(seleccionAgencias);
-        int seleccionMenuPrincipal = menuPrincipal(seleccionAgencias, baseDeDatos);
+        int seleccionMenuPrincipal = 0;
+        while (seleccionMenuPrincipal != 15){
+            seleccionMenuPrincipal = menuPrincipal(seleccionAgencias, baseDeDatos);
+        }
     }
 
     //Devuelve el nombre de la agencia seleccionada
@@ -42,6 +47,7 @@ public class Main {
         System.out.println("12. Modificar datos de una visita guiada.");
         System.out.println("13. Modificar datos de un empleado.");
         System.out.println("14. Listado de los metadatos de los elementos de la BBDD.");
+        System.out.println("15. Salir.");
         System.out.println("******************");
         System.out.println("Selecciona una opción: ");
         Scanner sc = new Scanner(System.in);
@@ -109,9 +115,12 @@ public class Main {
                 System.out.println("Listado de los metadatos de los elementos de la BBDD");
                 listadoDeLosMetadatosDeLosElementosDeLaBBDD(baseDeDatos);
             }
+            case 15 -> {
+                System.out.println("Saliendo...");
+            }
             default -> {
                 System.out.println("⚠️ Debes seleccionar una opción válida");
-                menuAgencias();
+                opcion = 0;
             }
         }
         return opcion;
@@ -128,7 +137,12 @@ public class Main {
             while (rs.next()) {
                 agencia.setId(rs.getInt("id"));
                 agencia.setNombre(rs.getString("nombre"));
-                agencia.setFechaApertura(rs.getDate("fecha_apertura"));
+                //para SQL Lite
+                //get fecha_apertura as a string and convert it to a date
+                String fechaApertura = rs.getString("fecha_apertura");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(fechaApertura);
+                agencia.setFechaApertura(date);
                 agencia.setDireccion(rs.getString("direccion"));
                 agencia.setTelefono(rs.getString("telefono"));
                 agencia.setEmail(rs.getString("email"));
