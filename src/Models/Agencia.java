@@ -1,25 +1,27 @@
-package Modelo;
+package Models;
 
 import java.util.Date;
 
-public class AgenciaViajes {
-
+public class Agencia {
     private int id;
     private String nombre;
-    private Date fechaCreacion;
-    private String cif;
+    private Date fechaApertura;
     private String direccion;
     private String telefono;
     private String email;
+    private String web;
 
-    public AgenciaViajes(int id, String nombre, Date fechaCreacion, String cif, String direccion, String telefono, String email) {
+    public Agencia(int id, String nombre, Date fechaApertura, String direccion, String telefono, String email, String web) {
         this.id = id;
         this.nombre = nombre;
-        this.fechaCreacion = fechaCreacion;
-        this.cif = cif;
+        this.fechaApertura = fechaApertura;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
+        this.web = web;
+    }
+
+    public Agencia() {
     }
 
     public int getId() {
@@ -38,20 +40,12 @@ public class AgenciaViajes {
         this.nombre = nombre;
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
+    public Date getFechaApertura() {
+        return fechaApertura;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public String getCif() {
-        return cif;
-    }
-
-    public void setCif(String cif) {
-        this.cif = cif;
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
     }
 
     public String getDireccion() {
@@ -78,16 +72,24 @@ public class AgenciaViajes {
         this.email = email;
     }
 
+    public String getWeb() {
+        return web;
+    }
+
+    public void setWeb(String web) {
+        this.web = web;
+    }
+
     @Override
     public String toString() {
-        return "AgenciaViajes{" +
-                "id='" + id + '\'' +
-                "nombre='" + nombre + '\'' +
-                ", fechaCreacion=" + fechaCreacion +
-                ", cif='" + cif + '\'' +
+        return "Agencia{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", fechaApertura=" + fechaApertura +
                 ", direccion='" + direccion + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", email='" + email + '\'' +
+                ", web='" + web + '\'' +
                 '}';
     }
 }
