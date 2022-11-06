@@ -3,7 +3,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        int seleccionAgencias = menuAgencias();
+
+        BBDD.H2.conectar();
+
+
+
+        //int seleccionAgencias = menuAgencias();
     }
 
 
@@ -15,12 +20,11 @@ public class Main {
         System.out.println("1. Viajes Eroski - BBDD.MySQL");
         System.out.println("2. Viajes Bakomat - SQLLite");
         System.out.println("3. Viajes Bidasoa - H2");
-        System.out.println("4. Viajes Euskotren - PostgreSQL");
 
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
 
-        if (opcion < 1 || opcion > 4) {
+        if (opcion < 1 || opcion > 3) {
             System.out.println("Opcion incorrecta");
             return menuAgencias();
         }
