@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class AgenciaViajes {
 
+    private int id;
     private String nombre;
     private Date fechaCreacion;
     private String cif;
@@ -11,13 +12,22 @@ public class AgenciaViajes {
     private String telefono;
     private String email;
 
-    public AgenciaViajes(String nombre, Date fechaCreacion, String cif, String direccion, String telefono, String email) {
+    public AgenciaViajes(int id, String nombre, Date fechaCreacion, String cif, String direccion, String telefono, String email) {
+        this.id = id;
         this.nombre = nombre;
         this.fechaCreacion = fechaCreacion;
         this.cif = cif;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -71,6 +81,7 @@ public class AgenciaViajes {
     @Override
     public String toString() {
         return "AgenciaViajes{" +
+                "id='" + id + '\'' +
                 "nombre='" + nombre + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", cif='" + cif + '\'' +
