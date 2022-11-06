@@ -1,0 +1,74 @@
+CREATE TABLE AGENCIA (
+    id INTEGER NOT NULL,
+    nombre VARCHAR(250) NOT NULL,
+    fecha_apertura DATE NOT NULL,
+    direccion VARCHAR(250) NOT NULL,
+    telefono VARCHAR(250) NOT NULL,
+    email VARCHAR(250) NOT NULL,
+    web VARCHAR(250) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE EMPLEADO (
+    id INTEGER NOT NULL,
+    dni VARCHAR(9) NOT NULL,
+    nombre VARCHAR(250) NOT NULL,
+    apellido VARCHAR(250) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    fecha_contratacion DATE NOT NULL,
+    nacionalidad VARCHAR(250) NOT NULL,
+    cargo VARCHAR(250) NOT NULL,
+    activo BOOLEAN NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE CLIENTE (
+    id INTEGER NOT NULL,
+    dni VARCHAR(9) NOT NULL,
+    nombre VARCHAR(250) NOT NULL,
+    apellidos VARCHAR(250) NOT NULL,
+    edad INTEGER NOT NULL,
+    profesion VARCHAR(250) NOT NULL,
+    activo BOOLEAN NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE VISITAGUIADA (
+    id INTEGER NOT NULL,
+    nombre VARCHAR(250) NOT NULL,
+    num_clientes_max INTEGER NOT NULL,
+    direccion_punto_partida VARCHAR(250) NOT NULL,
+    tematica VARCHAR(250) NOT NULL,
+    lugar VARCHAR(250) NOT NULL,
+    precio DOUBLE NOT NULL,
+    fecha DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    RESPONSABLE_id INTEGER NOT NULL,
+    activo BOOLEAN NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_VISITAGUIADA_EMPLEADO
+        FOREIGN KEY (RESPONSABLE_id)
+        REFERENCES EMPLEADO (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE COMPRAVISITAGUIADA (
+    id INTEGER NOT NULL,
+    fecha DATE NOT NULL,
+    id_cliente INTEGER NOT NULL,
+    id_visita INTEGER NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_COMPRAVISITAGUIADA_CLIENTE
+        FOREIGN KEY (id_cliente)
+        REFERENCES CLIENTE (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_COMPRAVISITAGUIADA_VISITAGUIADA
+        FOREIGN KEY (id_visita)
+        REFERENCES VISITAGUIADA (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
