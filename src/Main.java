@@ -6,7 +6,6 @@ public class Main {
         //int seleccionAgencias = menuAgencias();
     }
 
-
     public static int menuAgencias() {
 
         System.out.println("******************");
