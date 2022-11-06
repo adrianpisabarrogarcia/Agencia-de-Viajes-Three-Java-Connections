@@ -83,8 +83,8 @@ public class Generic {
                 conexion = MySQL.conectar();
             }
             ResultSet rs = conexion.createStatement().executeQuery(SQL);
-            System.out.println("Consultado correctamente");
-            desconectar(conexion);
+            //System.out.println("Consultado correctamente");
+            //desconectar(conexion);
 
             //Obtener los datos de la consulta
             return rs;
