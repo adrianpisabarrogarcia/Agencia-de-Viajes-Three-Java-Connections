@@ -1,6 +1,9 @@
 package BBDD;
 
+import org.h2.jdbc.JdbcSQLDataException;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Generic {
 
@@ -124,52 +127,51 @@ public class Generic {
             System.out.println("URL: " + url);
             System.out.println("Usuario: " + usuario);
             System.out.println("*********");
-            //tables
-            rs = dbmd.getTables("empresa", null, null, null);
+            //Nombre de esquema
+            rs = dbmd.getSchemas();
             while (rs.next()) {
-                //Catalogo
-                System.out.println("Catalogo: " + rs.getString(1));
-                //Esquema
-                System.out.println("Esquema: " + rs.getString(2));
-                //Nombre de la tabla
+                System.out.println("Esquema: " + rs.getString(1));
+            }
+            //Nombres de tablas
+            rs = dbmd.getTables(null, null, null, null);
+            ArrayList<String> tablas = new ArrayList<>();
+            while (rs.next()) {
                 System.out.println("Tabla: " + rs.getString(3));
-                //Tipo de tabla
-                System.out.println("Tipo: " + rs.getString(4));
+                tablas.add(rs.getString(3));
+            }
+            //Nombres de columnas
+            rs = dbmd.getColumns(null, null, null, null);
+            while (rs.next()) {
+                //Invalid value null for parameter "table" exception
+                try {
+                    System.out.println("Columna: " + rs.getString(4));
+                } catch (JdbcSQLDataException e) {
+                    System.out.println("Error al obtener el nombre de la columna");
+                }
+            }
+            //Cual es la clave primaria de cada tabla
+            for (String tabla : tablas) {
+                rs = dbmd.getPrimaryKeys(null, null, tabla);
+                while (rs.next()) {
+                    System.out.println("Clave primaria de " + tabla + ": " + rs.getString(4));
+                }
             }
             System.out.println("*********");
 
-            //columns
-            rs = dbmd.getColumns("empresa", null, "empleado", null);
+            //Por cada tabla, mostrar sus columnas
+            rs = dbmd.getTables(null, null, null, null);
             while (rs.next()) {
-                //Catalogo
-                System.out.println("Catalogo: " + rs.getString(1));
-                //Esquema
-                System.out.println("Esquema: " + rs.getString(2));
-                //Nombre de la tabla
                 System.out.println("Tabla: " + rs.getString(3));
-                //Nombre de la columna
-                System.out.println("Columna: " + rs.getString(4));
-                //Tipo de dato
-                System.out.println("Tipo: " + rs.getString(5));
-                //Tamaño
-                System.out.println("Tamaño: " + rs.getString(7));
-                //Nulo
-                System.out.println("Nulo: " + rs.getString(18));
-            }
-            System.out.println("*********");
-
-            System.out.println("Columnas de la tabla departamento");
-            rs = dbmd.getColumns("empresa", null, "departamento", null);
-            while (rs.next()) {
-                //Nombre columna
-                System.out.println("Nombre de columna: " + rs.getString("COLUMN_NAME"));
-                //Type name
-                System.out.println("Tipo: " + rs.getString("TYPE_NAME"));
-                //Tamaño
-                System.out.println("Tamaño de la columna: " + rs.getString("COLUMN_SIZE"));
-                //Nulo
-                System.out.println("Es nulo?: " + rs.getString("IS_NULLABLE"));
-                System.out.println("*********");
+                ResultSet rs2 = dbmd.getColumns(null, null, rs.getString(3), null);
+                while (rs2.next()) {
+                    System.out.println("Columna: " + rs2.getString(4));
+                    //Tipo
+                    System.out.println("Tipo: " + rs2.getString(6));
+                    //Tamaño
+                    System.out.println("Tamaño: " + rs2.getString(7));
+                    //Nulo
+                    System.out.println("Nulo: " + rs2.getString(18));
+                }
             }
 
         } catch (Exception e) {
